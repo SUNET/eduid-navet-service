@@ -39,7 +39,7 @@
   </wsdl:binding>
   <wsdl:service name="PersonpostXMLService">
     <wsdl:port binding="impl:PersonpostXMLSoapBinding" name="personpostXML">
-      <wsdlsoap:address location="https://ppx4.skatteverket.se/na/na_epersondata_demo/V2/personpostXML"/>
+      <wsdlsoap:address location="https://www2.skatteverket.se/na/na_epersondata/V2/personpostXML"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

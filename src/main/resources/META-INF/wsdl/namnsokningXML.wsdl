@@ -39,7 +39,7 @@
   </wsdl:binding>
   <wsdl:service name="NamnsokningXMLService">
     <wsdl:port binding="impl:NamnsokningXMLSoapBinding" name="namnsokningXML">
-      <wsdlsoap:address location="https://ppx4.skatteverket.se/na/na_epersondata_demo/V2/namnsokningXML"/>
+      <wsdlsoap:address location="https://www2.skatteverket.se/na/na_epersondata/V2/namnsokningXML"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
