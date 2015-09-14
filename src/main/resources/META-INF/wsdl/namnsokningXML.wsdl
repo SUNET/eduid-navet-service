@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:impl="http://www.skatteverket.se/folkbokforing/na/namnsokningXML/v2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:na="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1" targetNamespace="http://www.skatteverket.se/folkbokforing/na/namnsokningXML/v2">
+  <wsdl:documentation>Version 2.0</wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.skatteverket.se/folkbokforing/na/namnsokningXML/v2">
+      <xsd:import schemaLocation="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1/Epersondata.xsd" namespace="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getDataRequest">
+    <wsdl:part name="parameters" element="na:NamnsokningRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getDataResponse">
+    <wsdl:part name="parameters" element="na:NamnsokningXMLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NaWebServiceException">
+    <wsdl:part name="fault" element="na:WebServiceFault"/>
+  </wsdl:message>
+  <wsdl:portType name="NamnsokningXMLInterface">
+    <wsdl:operation name="getData">
+      <wsdl:input message="impl:getDataRequest" name="getDataRequest"/>
+      <wsdl:output message="impl:getDataResponse" name="getDataResponse"/>
+      <wsdl:fault message="impl:NaWebServiceException" name="NaWebServiceException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NamnsokningXMLSoapBinding" type="impl:NamnsokningXMLInterface">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getData">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getDataRequest">
+        <wsdlsoap:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output name="getDataResponse">
+        <wsdlsoap:body use="literal" parts="parameters"/>
+      </wsdl:output>
+      <wsdl:fault name="NaWebServiceException">
+        <wsdlsoap:fault name="NaWebServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="NamnsokningXMLService">
+    <wsdl:port binding="impl:NamnsokningXMLSoapBinding" name="namnsokningXML">
+      <wsdlsoap:address location="https://ppx4.skatteverket.se/na/na_epersondata_demo/V2/namnsokningXML"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
