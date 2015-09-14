@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import generated.FolkbokforingspostTYPE;
 import generated.FolkbokforingsposterTYPE;
+import generated.PersonpostTYPE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.ResponseXMLTYPE;
@@ -57,81 +58,16 @@ public class PersonPost {
         }
     }
 
-    /*
  public static class Response {
+     private NavetNotification.Response.PopulationItem.PersonItem PersonItem = new NavetNotification.Response.PopulationItem.PersonItem();
 
-
-     private Boolean SenderAccepted;
-     private AccountStatus AccountStatus = new AccountStatus();
-
-     public Response(Boolean senderAccepted, String recipient, String accountStatusType, String serviceAddress) {
-         this.setSenderAccepted(senderAccepted);
-         this.AccountStatus.setRecipient(recipient);
-         this.AccountStatus.setType(accountStatusType);
-         this.AccountStatus.ServiceSupplier.setServiceAddress(serviceAddress);
+     public Response(ResponseXMLTYPE data) {
+         PersonpostTYPE personPost = data.getFolkbokforingsposter().getFolkbokforingspost().get(0).getPersonpost();
+         this.PersonItem.setAll(personPost);
      }
 
-     public Response(ReachabilityStatus status) {
-         this.setSenderAccepted(status.isSenderAccepted());
-         this.AccountStatus.setRecipient(status.getAccountStatus().getRecipientId());
-         this.AccountStatus.setType(status.getAccountStatus().getType().value());
-         if (status.getAccountStatus().getServiceSupplier() != null) {
-             this.AccountStatus.ServiceSupplier.setServiceAddress(
-                     status.getAccountStatus().getServiceSupplier().getServiceAdress());
-         }
-     }
 
-     public static class AccountStatus {
-         private String RecipientId;
-         private String Type;
-         private ServiceSupplier ServiceSupplier = new ServiceSupplier();
-
-         public static class ServiceSupplier {
-             private String ServiceAddress = "";
-
-             public void setServiceAddress(String serviceAddress) {
-                 ServiceAddress = serviceAddress;
-             }
-
-             public String getServiceAddress() {
-                 return ServiceAddress;
-             }
-         }
-
-         public void setType(String type) {
-             Type = type;
-         }
-
-         public String getType() {
-             return Type;
-         }
-
-         public String getRecipient() {
-             return RecipientId;
-         }
-
-         public void setRecipient(String recipient) {
-             this.RecipientId = recipient;
-         }
-
-         public Response.AccountStatus.ServiceSupplier getServiceSupplier() {
-             return ServiceSupplier;
-         }
-     }
-
-     public void setSenderAccepted(Boolean senderAccepted) {
-         SenderAccepted = senderAccepted;
-     }
-
-     public Boolean getSenderAccepted() {
-         return SenderAccepted;
-     }
-
-     public Response.AccountStatus getAccountStatus() {
-         return AccountStatus;
-     }
  }
-     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public String isReachable(String json) {
@@ -141,10 +77,9 @@ public class PersonPost {
             request.validate();
             ResponseXMLTYPE status = service.getData(request.getIdentityNumber());
             slf4jLogger.info("navetclient response received");
-            //Response response = new Response(status);
+            Response response = new Response(status);
             slf4jLogger.info("API personpost response created");
-            return null;
-            //return gson.toJson(response);
+            return gson.toJson(response);
         } catch (RestException e) {
             throw e;
         } catch (NullPointerException e) {

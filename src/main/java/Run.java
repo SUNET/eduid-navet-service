@@ -6,6 +6,7 @@ import generated.NamnTYPE;
 import generated.PersonpostTYPE;
 import org.apache.commons.cli.*;
 import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.ResponseXMLTYPE;
+import se.sunet.navet.service.api.NavetNotification;
 import se.sunet.navet.service.navetclient.PersonPostService;
 import se.sunet.navet.service.server.EmbeddedServer;
 
@@ -61,14 +62,16 @@ public class Run extends EmbeddedServer {
                     System.getProperty("se.sunet.navet.service.orderIdentity")
             );
 
+            Gson gson = new Gson();
             ResponseXMLTYPE data = ps.getData("197609272393");
             List<FolkbokforingspostTYPE> fbp = data.getFolkbokforingsposter().getFolkbokforingspost();
             System.out.println("Something goes right! For once!!");
             FolkbokforingspostTYPE post = fbp.get(0);
-            post.getHistorik();
+            NavetNotification.Response resp = new NavetNotification.Response(data);
 
 
-            System.out.println();
+
+            System.out.println(gson.toJson(resp));
             //server.start();
             //server.join();
             System.exit(0);
