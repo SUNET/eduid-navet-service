@@ -1,2 +1,2 @@
 # eduid-navet-service
-SOAP-RESTful bridge for the Navet service.
+SOAP to HTTP API for the Navet service.
