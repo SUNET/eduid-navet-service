@@ -3,6 +3,8 @@ package se.sunet.navet.service.navetclient;
 import org.apache.cxf.configuration.jsse.TLSClientParameters;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.skatteverket.folkbokforing.na.personpostxml.v2.NaWebServiceException;
 import se.skatteverket.folkbokforing.na.personpostxml.v2.PersonpostXMLService;
 import se.skatteverket.folkbokforing.na.personpostxml.v2.PersonpostXMLInterface;
@@ -26,6 +28,7 @@ import java.security.cert.CertificateException;
  */
 public class PersonPostService  {
 
+    private final Logger slf4jLogger = LoggerFactory.getLogger(PersonPostService.class);
     private PersonpostXMLService svc = new PersonpostXMLService();
     private KeyStore keyStore;
     private KeyManager[] keyManagers;
@@ -41,6 +44,7 @@ public class PersonPostService  {
         this.keyStore = KeyStore.getInstance(System.getProperty("javax.net.ssl.keyStoreType"));
         this.keyStore.load(new FileInputStream(System.getProperty("javax.net.ssl.keyStore")), System.getProperty("javax.net.ssl.keyStorePassword").toCharArray());
         this.keyManagers = getKeyManagers();
+        slf4jLogger.info("PersonPostService initialized");
     }
 
     private PersonpostXMLInterface getPort() {
@@ -60,9 +64,9 @@ public class PersonPostService  {
     private PersonpostRequestTYPE getRequest(String nationalIdentityNumber)  {
         PersonpostRequestTYPE ppr = new PersonpostRequestTYPE();
         BestallningTYPE order = new BestallningTYPE();
-        Long orgNum = new Long(organisationNumber);
+        Long orgNum = new Long(this.organisationNumber);
         order.setOrgNr(orgNum);
-        order.setBestallningsId(orderId);
+        order.setBestallningsId(this.orderId);
         ppr.setBestallning(order);
         Long nin = new Long(nationalIdentityNumber);
         ppr.setPersonId(nin);

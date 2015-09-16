@@ -13,6 +13,7 @@ import se.sunet.navet.service.navetclient.PersonPostService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -34,9 +35,10 @@ public class PersonPost {
     private final PersonPostService service;
 
     public PersonPost() throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, IOException {
-        String wsBaseEndpoint = System.getProperty("se.sunet.mm.service.wsBaseEndpoint");
-        String organisationNumber = System.getProperty("se.sunet.mm.service.organisationNumber");
+        String wsBaseEndpoint = System.getProperty("se.sunet.navet.service.wsBaseEndpoint");
+        String organisationNumber = System.getProperty("se.sunet.navet.service.organisationNumber");
         String orderIdentity = System.getProperty("se.sunet.navet.service.orderIdentity");
+        slf4jLogger.info(wsBaseEndpoint + ' ' + organisationNumber + ' ' + orderIdentity);
         this.service = new PersonPostService(wsBaseEndpoint, organisationNumber, orderIdentity);
     }
 
@@ -58,19 +60,27 @@ public class PersonPost {
         }
     }
 
- public static class Response {
-     private NavetNotification.Response.PopulationItem.PersonItem PersonItem = new NavetNotification.Response.PopulationItem.PersonItem();
+    public static class Response {
+        private NavetNotification.Response.PopulationItem.PersonItem PersonItem;
 
-     public Response(ResponseXMLTYPE data) {
-         PersonpostTYPE personPost = data.getFolkbokforingsposter().getFolkbokforingspost().get(0).getPersonpost();
-         this.PersonItem.setAll(personPost);
-     }
+        public Response(ResponseXMLTYPE data) {
+            try {
+                PersonpostTYPE personPost = data.getFolkbokforingsposter().getFolkbokforingspost().get(0).getPersonpost();
+                this.PersonItem = new NavetNotification.Response.PopulationItem.PersonItem();
+                this.PersonItem.setAll(personPost);
+            } catch (IndexOutOfBoundsException e) {
+                throw new RestException(javax.ws.rs.core.Response.Status.OK, "No match for identity number");
+            }
+        }
 
+        public NavetNotification.Response.PopulationItem.PersonItem getPersonItem() {
+            return PersonItem;
+        }
+    }
 
- }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public String isReachable(String json) {
+    public String getPersonPost(String json) {
         try {
             Request request = gson.fromJson(json, Request.class);
             slf4jLogger.info("API personpost request received");

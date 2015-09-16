@@ -1,19 +1,9 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import generated.FolkbokforingspostTYPE;
-import generated.FolkbokforingsposterTYPE;
-import generated.NamnTYPE;
-import generated.PersonpostTYPE;
+package se.sunet.navet.service;
+
 import org.apache.commons.cli.*;
-import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.ResponseXMLTYPE;
-import se.sunet.navet.service.api.NavetNotification;
-import se.sunet.navet.service.navetclient.PersonPostService;
 import se.sunet.navet.service.server.EmbeddedServer;
 
-import javax.xml.bind.JAXBElement;
 import java.io.*;
-import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by lundberg on 2015-09-01.
@@ -56,24 +46,23 @@ public class Run extends EmbeddedServer {
             EmbeddedServer server = new Run();
             server.setup(configFile);
 
+            /* DEBUG
             PersonPostService ps = new PersonPostService(
                     System.getProperty("se.sunet.navet.service.wsBaseEndpoint"),
                     System.getProperty("se.sunet.navet.service.organisationNumber"),
                     System.getProperty("se.sunet.navet.service.orderIdentity")
             );
-
             Gson gson = new Gson();
             ResponseXMLTYPE data = ps.getData("197609272393");
             List<FolkbokforingspostTYPE> fbp = data.getFolkbokforingsposter().getFolkbokforingspost();
             System.out.println("Something goes right! For once!!");
             FolkbokforingspostTYPE post = fbp.get(0);
             NavetNotification.Response resp = new NavetNotification.Response(data);
-
-
-
             System.out.println(gson.toJson(resp));
-            //server.start();
-            //server.join();
+            */
+
+            server.start();
+            server.join();
             System.exit(0);
         } catch (IllegalArgumentException e) {
             System.err.println("Missing configuration in " + configFile + ".");

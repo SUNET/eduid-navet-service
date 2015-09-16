@@ -33,13 +33,13 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class NavetNotification {
 
-    private final Logger slf4jLogger = LoggerFactory.getLogger(PersonPost.class);
+    private final Logger slf4jLogger = LoggerFactory.getLogger(NavetNotification.class);
     private final Gson gson = new Gson();
     private final PersonPostService service;
 
     public NavetNotification() throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, IOException {
-        String wsBaseEndpoint = System.getProperty("se.sunet.mm.service.wsBaseEndpoint");
-        String organisationNumber = System.getProperty("se.sunet.mm.service.organisationNumber");
+        String wsBaseEndpoint = System.getProperty("se.sunet.navet.service.wsBaseEndpoint");
+        String organisationNumber = System.getProperty("se.sunet.navet.service.organisationNumber");
         String orderIdentity = System.getProperty("se.sunet.navet.service.orderIdentity");
         this.service = new PersonPostService(wsBaseEndpoint, organisationNumber, orderIdentity);
     }
@@ -76,20 +76,16 @@ public class NavetNotification {
                 // PersonPost
                 PersonpostTYPE personPost = post.getPersonpost();
                 PopulationItem.PersonItem.setAll(personPost);
-
-                // Add more data here
-
-                personPost.getAdresser();
+                // Add more data?
+                /*
                 personPost.getAvregistrering();
                 personPost.getCivilstand();
                 personPost.getFodelse();
                 personPost.getFolkbokforing();
                 personPost.getHanvisningsPersonNr();
                 personPost.getInvandring();
-                personPost.getNamn();
-                personPost.getPersonId().getPersonNr();
-                personPost.getRelationer();
                 personPost.getMedborgarskap();
+                */
                 this.PopulationItems.add(PopulationItem);
             }
         }
@@ -139,13 +135,10 @@ public class NavetNotification {
                     // Relations
                     RelationerTYPE relations = personPost.getRelationer();
                     if (relations != null) {
-                        for (RelationerTYPE.Relation relation: relations.getRelation()) {
-                            NamnTYPE name = relation.getNamn();
-                            JAXBElement<Integer> relationStartDate = relation.getRelationFromdatum();
-                            JAXBElement<Integer> relationEndDate = relation.getRelationTomdatum();
-                            RelationPersonIdTYPE relationId = relation.getRelationId();
-                            RelationstypTYPE relationshipType = relation.getRelationstyp();
-                            String status = relation.getStatus();
+                        for (RelationerTYPE.Relation relationData: relations.getRelation()) {
+                            Relation relation = new Relation();
+                            relation.setAll(relationData);
+                            Relations.add(relation);
                         }
                     }
                 }
@@ -337,15 +330,18 @@ public class NavetNotification {
                 }
 
                 public static class Relation {
-                    private Name Name = new Name();
+                    private Name Name;
                     private String RelationStartDate;
                     private String RelationEndDate;
                     private RelationId RelationId = new RelationId();
+                    private String RelationType;
+                    private String Status;
 
                     public void setAll(RelationerTYPE.Relation relation) {
                         // Relation name
                         NamnTYPE relationName = relation.getNamn();
                         if (relationName != null) {
+                            this.Name = new PersonItem.Name();
                             this.Name.setAll(relationName);
                         }
                         // RelationStartDate
@@ -358,7 +354,18 @@ public class NavetNotification {
                         if (relationEndDate != null) {
                             this.setRelationEndDate(relationEndDate.getValue());
                         }
-
+                        // RelationId
+                        RelationPersonIdTYPE relationId = relation.getRelationId();
+                        if (relationId != null) {
+                            RelationId.setAll(relationId);
+                        }
+                        // RelationType
+                        RelationstypTYPE relationType = relation.getRelationstyp();
+                        if (relationType != null) {
+                            this.setRelationType(relationType.value());
+                        }
+                        // Status
+                        this.setStatus(relation.getStatus());
                     }
 
                     public static class RelationId {
@@ -371,7 +378,7 @@ public class NavetNotification {
                             if (personNr != null) {
                                 this.setNationalIdentityNumber(personNr.getValue());
                             }
-                            // CoOrdinationNumber
+                            // BirthTimeNumber
                             JAXBElement<Long> fodelsetidNr = relationPersonId.getFodelsetidNr();
                             if (fodelsetidNr != null) {
                                 this.setBirthTimeNumber(fodelsetidNr.getValue());
@@ -395,6 +402,22 @@ public class NavetNotification {
                         }
                     }
 
+                    public String getStatus() {
+                        return Status;
+                    }
+
+                    public void setStatus(String status) {
+                        Status = status;
+                    }
+
+                    public String getRelationType() {
+                        return RelationType;
+                    }
+
+                    public void setRelationType(String relationType) {
+                        RelationType = relationType;
+                    }
+
                     public String getRelationStartDate() {
                         return RelationStartDate;
                     }
@@ -412,24 +435,77 @@ public class NavetNotification {
                     }
                 }
 
+                public PopulationItem.PersonItem.PersonId getPersonId() {
+                    return PersonId;
+                }
+
+                public void setPersonId(PopulationItem.PersonItem.PersonId personId) {
+                    PersonId = personId;
+                }
+
+                public PopulationItem.PersonItem.Name getName() {
+                    return Name;
+                }
+
+                public void setName(PopulationItem.PersonItem.Name name) {
+                    Name = name;
+                }
+
+                public PopulationItem.PersonItem.PostalAddresses getPostalAddresses() {
+                    return PostalAddresses;
+                }
+
+                public void setPostalAddresses(PopulationItem.PersonItem.PostalAddresses postalAddresses) {
+                    PostalAddresses = postalAddresses;
+                }
+
+                public List<Relation> getRelations() {
+                    return Relations;
+                }
+
+                public void setRelations(List<Relation> relations) {
+                    Relations = relations;
+                }
             }
 
+            public PopulationItem.CaseInformation getCaseInformation() {
+                return CaseInformation;
+            }
+
+            public void setCaseInformation(PopulationItem.CaseInformation caseInformation) {
+                CaseInformation = caseInformation;
+            }
+
+            public PopulationItem.PersonItem getPersonItem() {
+                return PersonItem;
+            }
+
+            public void setPersonItem(PopulationItem.PersonItem personItem) {
+                PersonItem = personItem;
+            }
+        }
+
+        public List<PopulationItem> getPopulationItems() {
+            return PopulationItems;
+        }
+
+        public void setPopulationItems(List<PopulationItem> populationItems) {
+            PopulationItems = populationItems;
         }
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public String isReachable(String json) {
+    public String getNavetNotification(String json) {
         try {
             Request request = gson.fromJson(json, Request.class);
-            slf4jLogger.info("API personpost request received");
+            slf4jLogger.info("API navetnotification request received");
             request.validate();
             ResponseXMLTYPE data = service.getData(request.getIdentityNumber());
             slf4jLogger.info("navetclient response received");
-            //Response response = new Response(data);
-            slf4jLogger.info("API personpost response created");
-            return null;
-            //return gson.toJson(response);
+            Response response = new Response(data);
+            slf4jLogger.info("API navetnotification response created");
+            return gson.toJson(response);
         } catch (RestException e) {
             throw e;
         } catch (NullPointerException e) {
@@ -440,7 +516,7 @@ public class NavetNotification {
             slf4jLogger.error(e.getMessage());
             throw new RestException(javax.ws.rs.core.Response.Status.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
-            slf4jLogger.error("Could not return PersonPost.Response", e);
+            slf4jLogger.error("Could not return NavetNotification.Response", e);
             throw new RestException(e);
         }
     }
