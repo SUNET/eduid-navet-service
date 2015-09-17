@@ -2,8 +2,6 @@ package se.sunet.navet.service.api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import generated.FolkbokforingspostTYPE;
-import generated.FolkbokforingsposterTYPE;
 import generated.PersonpostTYPE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +11,11 @@ import se.sunet.navet.service.navetclient.PersonPostService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.util.List;
 
 /**
  * Created by lundberg on 2015-09-11.
@@ -69,7 +65,7 @@ public class PersonPost {
                 this.PersonItem = new NavetNotification.Response.PopulationItem.PersonItem();
                 this.PersonItem.setAll(personPost);
             } catch (IndexOutOfBoundsException e) {
-                throw new RestException(javax.ws.rs.core.Response.Status.OK, "No match for identity number");
+                // No match for identity number, PersonItem is null which equals JSON output of {}
             }
         }
 
