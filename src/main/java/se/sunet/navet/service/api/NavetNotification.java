@@ -99,7 +99,9 @@ public class NavetNotification {
                 private String lastChanged;
 
                 public void setAll(FolkbokforingspostTYPE.Arendeuppgift arendeuppgift) {
-                    this.setLastChanged(arendeuppgift.getAndringstidpunkt().toString());
+                    if (arendeuppgift != null) {
+                        this.setLastChanged(arendeuppgift.getAndringstidpunkt().toString());
+                    }
                 }
 
                 public String getLastChanged() {

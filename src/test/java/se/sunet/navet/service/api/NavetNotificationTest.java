@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Created by lundberg on 2015-09-16.
@@ -22,7 +23,7 @@ public class NavetNotificationTest extends SetupCommon {
     private final Gson gson = new Gson();
 
     @Test
-    public void testSendMessage() throws Exception {
+    public void testNINMatch() throws Exception {
         Server server = embeddedServer.getServer();
         String servletPath = "/personpost/navetnotification";
 
@@ -43,5 +44,24 @@ public class NavetNotificationTest extends SetupCommon {
         assertNotNull(jsonResponse.getPopulationItems().get(0).getPersonItem().getName());
         assertNotNull(jsonResponse.getPopulationItems().get(0).getPersonItem().getRelations());
         assertNotNull(jsonResponse.getPopulationItems().get(0).getCaseInformation());
+    }
+
+    @Test
+    public void testNINNoMatch() throws Exception {
+        Server server = embeddedServer.getServer();
+        String servletPath = "/personpost/navetnotification";
+
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(server.getURI()).path(servletPath);
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("identity_number", TEST_PERSON_FAILING_NIN);
+
+        Entity entity = Entity.entity(gson.toJson(data), MediaType.APPLICATION_JSON);
+        Response response = target.request(MediaType.APPLICATION_JSON).post(entity);
+
+        NavetNotification.Response jsonResponse = gson.fromJson(response.readEntity(String.class), NavetNotification.Response.class);
+
+        assertTrue(jsonResponse.getPopulationItems().isEmpty());
     }
 }
