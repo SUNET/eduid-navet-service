@@ -24,7 +24,7 @@ import java.security.cert.CertificateException;
 /**
  * Created by lundberg on 2015-09-16.
  */
-public class NamnSokningService {
+public class NamnsokningService {
     private final Logger slf4jLogger = LoggerFactory.getLogger(PersonPostService.class);
     private NamnsokningXMLService svc = new NamnsokningXMLService();
     private KeyStore keyStore;
@@ -34,7 +34,7 @@ public class NamnSokningService {
     private String wsBaseEndpoint;
     private static String serviceName = "V2/namnsokningXML";
 
-    public NamnSokningService(String wsBaseEndpoint, String orgNum, String orderId) throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, IOException {
+    public NamnsokningService(String wsBaseEndpoint, String orgNum, String orderId) throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, IOException {
         this.wsBaseEndpoint = wsBaseEndpoint;
         this.organisationNumber = orgNum;
         this.orderId = orderId;

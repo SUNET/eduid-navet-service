@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.ResponseXMLTYPE;
 import se.sunet.navet.service.api.exceptions.RestException;
-import se.sunet.navet.service.navetclient.NamnSokningService;
+import se.sunet.navet.service.navetclient.NamnsokningService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -27,18 +27,18 @@ import java.util.List;
 
 @Path("/namnsokning")
 @Produces(MediaType.APPLICATION_JSON)
-public class NamnSokning {
+public class Namnsokning {
 
     private final Logger slf4jLogger = LoggerFactory.getLogger(PersonPost.class);
     private final Gson gson = new Gson();
-    private final NamnSokningService service;
+    private final NamnsokningService service;
 
-    public NamnSokning() throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, IOException {
+    public Namnsokning() throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, IOException {
         String wsBaseEndpoint = System.getProperty("se.sunet.navet.service.wsBaseEndpoint");
         String organisationNumber = System.getProperty("se.sunet.navet.service.organisationNumber");
         String orderIdentity = System.getProperty("se.sunet.navet.service.orderIdentity");
         slf4jLogger.info(wsBaseEndpoint + ' ' + organisationNumber + ' ' + orderIdentity);
-        this.service = new NamnSokningService(wsBaseEndpoint, organisationNumber, orderIdentity);
+        this.service = new NamnsokningService(wsBaseEndpoint, organisationNumber, orderIdentity);
     }
 
     public static class Request {
@@ -120,7 +120,7 @@ public class NamnSokning {
             slf4jLogger.error(e.getMessage());
             throw new RestException(javax.ws.rs.core.Response.Status.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
-            slf4jLogger.error("Could not return NamnSokning.Response", e);
+            slf4jLogger.error("Could not return Namnsokning.Response", e);
             throw new RestException(e);
         }
     }
