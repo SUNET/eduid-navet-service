@@ -9,7 +9,7 @@ import static org.testng.Assert.assertNotNull;
 /**
  * Created by lundberg on 2015-09-17.
  */
-public class NamnsokingServiceTest extends SetupCommon {
+public class NamnsokningServiceTest extends SetupCommon {
     @Test
     public void testSendSecureMessage() throws Exception {
         NamnsokningService namnsokningService = new NamnsokningService(WS_BASE_ENDPOINT, ORG_NR, ORDER_ID);
