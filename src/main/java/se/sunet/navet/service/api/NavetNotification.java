@@ -5,12 +5,10 @@ import com.google.gson.JsonSyntaxException;
 import generated.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.PersonpostRequestTYPE;
 import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.ResponseXMLTYPE;
 import se.sunet.navet.service.api.exceptions.RestException;
 import se.sunet.navet.service.navetclient.PersonPostService;
 
-import javax.management.relation.RelationType;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
@@ -20,7 +18,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -183,7 +180,7 @@ public class NavetNotification {
                     private String GivenNameMarking;
                     private String GivenName;
                     private String MiddleName;
-                    private String SurName;
+                    private String Surname;
 
                     public void setAll(NamnTYPE name) {
                         // GivenNameMarking
@@ -201,10 +198,10 @@ public class NavetNotification {
                         if (middleNameElement != null) {
                             this.setMiddleName(middleNameElement.getValue().getValue());
                         }
-                        // SurName
+                        // Surname
                         JAXBElement<NamnTYPE.Efternamn> surNameElement = name.getEfternamn();
                         if (surNameElement != null) {
-                            this.setSurName(surNameElement.getValue().getValue());
+                            this.setSurname(surNameElement.getValue().getValue());
                         }
 
                     }
@@ -233,12 +230,12 @@ public class NavetNotification {
                         MiddleName = middleName;
                     }
 
-                    public String getSurName() {
-                        return SurName;
+                    public String getSurname() {
+                        return Surname;
                     }
 
-                    public void setSurName(String surName) {
-                        SurName = surName;
+                    public void setSurname(String surname) {
+                        Surname = surname;
                     }
                 }
 
