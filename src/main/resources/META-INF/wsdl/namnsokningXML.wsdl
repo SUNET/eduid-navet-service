@@ -3,7 +3,7 @@
   <wsdl:documentation>Version 2.0</wsdl:documentation>
   <wsdl:types>
     <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.skatteverket.se/folkbokforing/na/namnsokningXML/v2">
-      <xsd:import schemaLocation="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1/Epersondata.xsd" namespace="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1"/>
+      <xsd:import schemaLocation="schema/Epersondata.xsd" namespace="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1"/>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="getDataRequest">

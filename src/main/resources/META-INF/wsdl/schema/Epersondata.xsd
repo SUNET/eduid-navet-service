@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1" elementFormDefault="qualified" attributeFormDefault="unqualified"
+xmlns:tns="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+version="1.0">
+    <xs:import schemaLocation="Navetavisering.xsd" />
+
+    <xs:element name="PersonpostRequest" type="tns:PersonpostRequestTYPE">
+        <xs:annotation>
+            <xs:documentation>Request personsökning, innehåller information om den beställning som anropet utförs för samt sökvillkor, personid </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="PersonpostResponse" type="tns:ResponseTermPostTYPE">
+        <xs:annotation>
+            <xs:documentation>Svar personsökning, innehåller 0-1 folkbokföringsposter, format termkod/termdata</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="PersonpostXMLResponse" type="tns:ResponseXMLTYPE">
+        <xs:annotation>
+            <xs:documentation>Svar personsökning, innehåller 0-1 folkbokföringsposter, XML-format</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="NamnsokningRequest" type="tns:NamnsokningRequestTYPE">
+        <xs:annotation>
+            <xs:documentation>Request namnsökning, innehåller information om den beställning som anropet utförs för samt sökvillkor</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:element name="NamnsokningResponse" type="tns:ResponseTermPostTYPE">
+        <xs:annotation>
+            <xs:documentation>Svar namnsökning, innehåller 0-N folkbokföringsposter, format termkod/termdata</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="NamnsokningXMLResponse" type="tns:ResponseXMLTYPE">
+        <xs:annotation>
+            <xs:documentation>Svar namnsökning, innehåller 0-N folkbokföringsposter, XML-format</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="WebServiceFault" type="tns:WebServiceFaultTYPE">
+        <xs:annotation>
+            <xs:documentation>Soap-fault, innehåller felkod och beskrivning av felet</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="WebServiceFaultTYPE">
+        <xs:sequence>
+            <xs:element name="Felkod" type="xs:int"/>
+            <xs:element name="Beskrivning" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonpostRequestTYPE">
+        <xs:sequence>
+            <xs:element name="Bestallning" type="tns:BestallningTYPE"/>
+            <xs:element name="PersonId" type="PersonNrTYPE"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NamnsokningRequestTYPE">
+        <xs:sequence>
+            <xs:element name="Bestallning" type="tns:BestallningTYPE"/>
+            <xs:element name="SokvillkorNamn" type="tns:SokvillkorNamnTYPE"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="ResponseTermPostTYPE">
+        <xs:annotation>
+            <xs:documentation>Sträng, format termkod/termdata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="ResponseXMLTYPE">
+        <xs:sequence>
+            <xs:element name="Folkbokforingsposter" type="FolkbokforingsposterTYPE" />
+        </xs:sequence>
+    </xs:complexType> 
+
+
+    <xs:complexType name="BestallningTYPE">
+        <xs:sequence>
+            <xs:element name="OrgNr" type="tns:OrgNrTYPE"/>
+            <xs:element name="BestallningsId" type="tns:BestallningsIdTYPE"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SokvillkorNamnTYPE">
+        <xs:annotation>
+            <xs:documentation>Sökvillkor, namnsökning</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Adress" type="tns:Strang70TYPE" nillable="true"/>
+            <xs:element name="EfterMellanNamn" type="Strang60TYPE" nillable="true"/>
+            <xs:element name="FodelsetidFrom" type="tns:FodelsetidDelTYPE"  nillable="true"/>
+            <xs:element name="FodelsetidTom" type="tns:FodelsetidDelTYPE" nillable="true"/>
+            <xs:element name="Fornamn" type="Strang80TYPE" nillable="true"/>
+            <xs:element name="Kon" type="KonTYPE" nillable="true"/>
+            <xs:element name="PostnummerFrom" type="tns:PostNrDelTYPE" nillable="true"/>
+            <xs:element name="PostnummerTom" type="tns:PostNrDelTYPE" nillable="true"/>
+            <xs:element name="Postort" type="tns:Strang27TYPE" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="OrgNrTYPE">
+        <xs:annotation>
+            <xs:documentation>Fullständigt orgnummer för aktören, 12 tkn, datatyp = number</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value = "160000000000" />
+            <xs:maxInclusive value = "999999999999" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="BestallningsIdTYPE">
+        <xs:annotation>
+            <xs:documentation>Beställningsnr, format NNNNNNNN-FONN-NNNN, datatyp=string, 18 tecken</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="18"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="FodelsetidDelTYPE">
+        <xs:annotation>
+            <xs:documentation>Inledande del av födelsetid, max 8 tkn, datatyp = number</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value = "1" />
+            <xs:maxInclusive value = "99999999" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PostNrDelTYPE">
+        <xs:annotation>
+            <xs:documentation>Inledande del av postnummer, max 5 tkn, datatyp = number</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value = "1" />
+            <xs:maxInclusive value = "99999" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Strang70TYPE">
+        <xs:annotation>
+            <xs:documentation>Sträng med max 70 tecken</xs:documentation> 
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="70" /> 
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Strang27TYPE">
+        <xs:annotation>
+            <xs:documentation>Sträng med max 27 tecken</xs:documentation> 
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="27" /> 
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
