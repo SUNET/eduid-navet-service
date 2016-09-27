@@ -356,13 +356,13 @@
 			<xs:element name="Fornamn" nillable="true" minOccurs="0">
 				<xs:complexType>
 					<xs:simpleContent>
-		 	 			<xs:extension base="Strang80TYPE">
+						<xs:extension base="Strang80TYPE">
 							<xs:attribute name="styrkt" use="optional">
 								<xs:simpleType>
-  									<xs:restriction base="xs:string">
+									<xs:restriction base="xs:string">
 										<xs:enumeration value="J"/>
 										<xs:enumeration value="N"/>
-  									</xs:restriction>
+									</xs:restriction>
 								</xs:simpleType>
 							</xs:attribute>
 						</xs:extension>
@@ -372,13 +372,13 @@
 			<xs:element name="Mellannamn" nillable="true" minOccurs="0">
 				<xs:complexType>
 					<xs:simpleContent>
-		 	 			<xs:extension base="Strang40TYPE">
+						<xs:extension base="Strang40TYPE">
 							<xs:attribute name="styrkt" use="optional">
 								<xs:simpleType>
-  									<xs:restriction base="xs:string">
+									<xs:restriction base="xs:string">
 										<xs:enumeration value="J"/>
 										<xs:enumeration value="N"/>
-  									</xs:restriction>
+									</xs:restriction>
 								</xs:simpleType>
 							</xs:attribute>
 						</xs:extension>
@@ -388,13 +388,13 @@
 			<xs:element name="Efternamn" nillable="true" minOccurs="0">
 				<xs:complexType>
 					<xs:simpleContent>
-		 	 			<xs:extension base="Strang60TYPE">
+						<xs:extension base="Strang60TYPE">
 							<xs:attribute name="styrkt" use="optional">
 								<xs:simpleType>
-  									<xs:restriction base="xs:string">
+									<xs:restriction base="xs:string">
 										<xs:enumeration value="J"/>
 										<xs:enumeration value="N"/>
-  									</xs:restriction>
+									</xs:restriction>
 								</xs:simpleType>
 							</xs:attribute>
 						</xs:extension>
@@ -453,6 +453,7 @@
 		<xs:sequence>
 			<xs:element name="Folkbokforingsadress" type="SvenskAdressTYPE" minOccurs="0"/>
 			<xs:element name="Riksnycklar" type="RiksnycklarTYPE" minOccurs="0"/>
+			<xs:element name="Distrikt" type="DistriktTYPE" minOccurs="0"/>
 			<xs:element name="SarskildPostadress" type="SvenskAdressTYPE" minOccurs="0"/>
 			<xs:element name="Utlandsadress" type="UtlandsadressTYPE" minOccurs="0"/>
 		</xs:sequence>
@@ -491,6 +492,14 @@
 			<xs:element name="FastighetsId" type="FastighetsIdTYPE" minOccurs="0"/>
 			<xs:element name="AdressplatsId" type="AdressplatsIdTYPE" minOccurs="0"/>
 			<xs:element name="LagenhetsId" type="LagenhetsIdTYPE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ************************************ -->
+	<!--Distrikt -->
+	<!--************************************* -->
+	<xs:complexType name="DistriktTYPE">
+		<xs:sequence>
+			<xs:element name="Distriktskod" type="DistriktskodTYPE" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- ************************************ -->
@@ -562,13 +571,13 @@
 			<xs:element name="FodelseortUtland" nillable="true" minOccurs="0">
 				<xs:complexType>
 					<xs:simpleContent>
-		 	 			<xs:extension base="Strang80TYPE">
+						<xs:extension base="Strang80TYPE">
 							<xs:attribute name="styrkt" use="optional">
 								<xs:simpleType>
-  									<xs:restriction base="xs:string">
+									<xs:restriction base="xs:string">
 										<xs:enumeration value="J"/>
 										<xs:enumeration value="N"/>
-  									</xs:restriction>
+									</xs:restriction>
 								</xs:simpleType>
 							</xs:attribute>
 						</xs:extension>
@@ -656,13 +665,13 @@
 			<xs:element name="MedborgarskapslandKod" nillable="true" minOccurs="0">
 				<xs:complexType>
 					<xs:simpleContent>
-		 	 			<xs:extension base="Strang2TYPE">
+						<xs:extension base="Strang2TYPE">
 							<xs:attribute name="styrkt" use="optional">
 								<xs:simpleType>
-  									<xs:restriction base="xs:string">
+									<xs:restriction base="xs:string">
 										<xs:enumeration value="J"/>
 										<xs:enumeration value="N"/>
-  									</xs:restriction>
+									</xs:restriction>
 								</xs:simpleType>
 							</xs:attribute>
 						</xs:extension>
@@ -847,7 +856,7 @@
 			<xs:maxLength value="2"/>
 		</xs:restriction>
 	</xs:simpleType>
-<xs:simpleType name="Strang12TYPE">
+	<xs:simpleType name="Strang12TYPE">
 		<xs:annotation>
 			<xs:documentation>Strängar med 12 tecken</xs:documentation>
 		</xs:annotation>
@@ -922,7 +931,13 @@
 			<xs:maxInclusive value="99999999999999"/>
 		</xs:restriction>
 	</xs:simpleType>
-<xs:simpleType name="UppehallsrattTYPE">
+	<xs:simpleType name="DistriktskodTYPE">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UppehallsrattTYPE">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="J"/>
 		</xs:restriction>
