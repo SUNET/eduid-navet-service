@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeTest;
 
 public class SetupCommon  {
     private static final String KEY_STORE_PATH = "./src/test/resources/notarealhost.kommun-a.se.p12";
-    private static final String KEY_STORE_PASSWORD = "3129445131123535";
+    private static final String KEY_STORE_PASSWORD = "9665545251064808";
     private static final String TRUST_KEYSTORE_PATH = "./src/test/resources/truststore.jks";
     private static final String TRUST_KEYSTORE_PASSWORD = "abc123";
     public static final String WS_BASE_ENDPOINT = "https://ppx4.skatteverket.se/na/na_epersondata_demo";
