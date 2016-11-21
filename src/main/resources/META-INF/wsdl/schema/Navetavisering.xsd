@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 sp1 (http://www.altova.com) by ﻿Skatteverket (Skatteverket) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified">
 	<xs:element name="Navetavisering">
 		<xs:annotation>
@@ -290,6 +291,7 @@
 			<xs:element name="PersonId" type="PersonIdTYPE"/>
 			<xs:element name="HanvisningsPersonNr" type="PersonNrTYPE" nillable="true" minOccurs="0"/>
 			<xs:element name="Avregistrering" type="AvregistreringTYPE" minOccurs="0"/>
+			<xs:element name="Fodelsedatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
 			<xs:element name="Namn" type="NamnTYPE" minOccurs="0"/>
 			<xs:element name="Folkbokforing" type="FolkbokforingTYPE" minOccurs="0"/>
 			<xs:element name="Adresser" type="AdressTYPE" minOccurs="0"/>
@@ -489,9 +491,9 @@
 	<!--************************************* -->
 	<xs:complexType name="RiksnycklarTYPE">
 		<xs:sequence>
-			<xs:element name="FastighetsId" type="FastighetsIdTYPE" minOccurs="0"/>
-			<xs:element name="AdressplatsId" type="AdressplatsIdTYPE" minOccurs="0"/>
-			<xs:element name="LagenhetsId" type="LagenhetsIdTYPE" minOccurs="0"/>
+			<xs:element name="FastighetsId" type="FastighetsIdTYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="AdressplatsId" type="AdressplatsIdTYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="LagenhetsId" type="LagenhetsIdTYPE" nillable="true" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- ************************************ -->
@@ -499,7 +501,7 @@
 	<!--************************************* -->
 	<xs:complexType name="DistriktTYPE">
 		<xs:sequence>
-			<xs:element name="Distriktskod" type="DistriktskodTYPE" minOccurs="0"/>
+			<xs:element name="Distriktskod" type="DistriktskodTYPE" nillable="true" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- ************************************ -->
@@ -593,12 +595,12 @@
 	<xs:complexType name="InvandringTYPE">
 		<xs:sequence>
 			<xs:element name="Invandringsdatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
-			<xs:element name="Uppehallsratt" type="UppehallsrattTYPE" minOccurs="0"/>
-			<xs:element name="NordisktPnrDa" type="Strang12TYPE" minOccurs="0"/>
-			<xs:element name="NordisktPnrFi" type="Strang12TYPE" minOccurs="0"/>
-			<xs:element name="NordisktPnrFo" type="Strang12TYPE" minOccurs="0"/>
-			<xs:element name="NordisktPnrIs" type="Strang12TYPE" minOccurs="0"/>
-			<xs:element name="NordisktPnrNo" type="Strang12TYPE" minOccurs="0"/>
+			<xs:element name="Uppehallsratt" type="UppehallsrattTYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="NordisktPnrDa" type="Strang12TYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="NordisktPnrFi" type="Strang12TYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="NordisktPnrFo" type="Strang12TYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="NordisktPnrIs" type="Strang12TYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="NordisktPnrNo" type="Strang12TYPE" nillable="true" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- ************************************ -->
@@ -723,7 +725,7 @@
 								<xs:sequence>
 									<xs:element name="RelationId" type="RelationPersonIdTYPE"/>
 									<xs:element name="SarlosningRelationstyp" type="SarlosningRelationtypTYPE"/>
-									<xs:element name="RelationFromDatum" type="OfullstandigtDatumTYPE" minOccurs="0"/>
+									<xs:element name="RelationFromDatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
 									<xs:element name="Namn" type="NamnTYPE" minOccurs="0"/>
 									<xs:element name="Avregistrering" type="AvregistreringTYPE" minOccurs="0"/>
 									<xs:element name="DodfottBarn" minOccurs="0">
@@ -812,7 +814,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="TilldelatPersonNrSamordningsNr">
+			<xs:element name="TilldelatPersonNrSamordningsNr" nillable="true">
 				<xs:simpleType>
 					<xs:restriction base="xs:integer">
 						<xs:minInclusive value="100000000000"/>
