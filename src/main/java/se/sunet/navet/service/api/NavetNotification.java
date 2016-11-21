@@ -153,9 +153,9 @@ public class NavetNotification {
                             this.setNationalIdentityNumber(personNr.getValue());
                         }
                         // CoOrdinationNumber
-                        Long tilldelatPersonNrSamordningsNr = personId.getTilldelatPersonNrSamordningsNr();
+                        JAXBElement<Long> tilldelatPersonNrSamordningsNr = personId.getTilldelatPersonNrSamordningsNr();
                         if (tilldelatPersonNrSamordningsNr != null) {
-                            this.setCoOrdinationNumber(tilldelatPersonNrSamordningsNr);
+                            this.setCoOrdinationNumber(tilldelatPersonNrSamordningsNr.getValue());
                         }
                     }
 
