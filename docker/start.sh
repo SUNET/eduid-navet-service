@@ -16,7 +16,7 @@ navet_keystore_file=${navet_keystore_file-"${navet_state_dir}/navet_keystore.p12
 navet_ca_cert_file=${navet_ca_cert_file-"${navet_etcdir}/Steria-AB-EID-CA-v2.cer"}
 navet_intermediate_cert_file1=${navet_intermediate_cert_file1-"${navet_etcdir}/VeriSign.cer"}
 navet_intermediate_cert_file2=${navet_intermediate_cert_file2-"${navet_etcdir}/Symantec.cer"}
-navet_truststore_file=${navet_truststore_file-"${navet_state_dir}/mm_truststore.jks"}
+navet_truststore_file=${navet_truststore_file-"${navet_state_dir}/navet_truststore.jks"}
 
 navet_properties=${navet_properties-"${navet_etcdir}/navet-service.properties"}
 navet_jar_file=${navet_jar_file-'/opt/eduid/eduid-navet-service-0.1-SNAPSHOT.jar'}
