@@ -3,12 +3,12 @@ package se.sunet.navet.service.navetclient;
 import org.testng.annotations.BeforeTest;
 
 public class SetupCommon  {
-    private static final String KEY_STORE_PATH = "./src/test/resources/notarealhost.kommun-a.se.p12";
-    private static final String KEY_STORE_PASSWORD = "4309734529556524";
+    private static final String KEY_STORE_PATH = "./src/test/resources/kommun-a.p12";
+    private static final String KEY_STORE_PASSWORD = "8017644482212111";
     private static final String TRUST_KEYSTORE_PATH = "./src/test/resources/truststore.jks";
     private static final String TRUST_KEYSTORE_PASSWORD = "abc123";
-    public static final String WS_BASE_ENDPOINT = "https://ppx4.skatteverket.se/na/na_epersondata_demo";
-    public static final String TEST_PERSON_NIN = "197609272393";
+    public static final String WS_BASE_ENDPOINT = "https://www2.test.skatteverket.se/nawa15/na_epersondata";
+    public static final String TEST_PERSON_NIN = "196608253081";
     public static final String TEST_PERSON_GIVEN_NAME = "Teofil";
     public static final String ORG_NR = "162021004748";
     public static final String ORDER_ID = "00000079-FO01-0001";
