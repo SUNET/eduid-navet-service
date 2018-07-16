@@ -1,0 +1,11 @@
+build_in_docker:
+  docker_image: docker.sunet.se/sunet/docker-jenkins-maven-job
+docker_name: eduid/eduid-navet-service
+script:
+  - mvn package
+triggers:
+  github_push: true
+  cron: "@weekly"
+slack:
+  room: "eduid-builds"
+clean_workspace: true
