@@ -1,6 +1,10 @@
 build_in_docker:
   image: docker.sunet.se/sunet/docker-jenkins-maven-job
 docker_name: eduid/eduid-navet-service
+environment_variables:
+  # Workaround for a bug with maven surefire and openjdk 8
+  # https://stackoverflow.com/a/53085816
+  _JAVA_OPTIONS: "-Djdk.net.URLClassPath.disableClassPathURLCheck=true"
 script:
   - mvn package
 triggers:
