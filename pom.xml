@@ -24,7 +24,7 @@
     <properties>
         <project.builder.sourceEncoding>UTF-8</project.builder.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jetty.version>9.1.5.v20140505</jetty.version>
+        <jetty.version>9.3.24.v20180605</jetty.version>
         <cxf.version>3.1.16</cxf.version>
         <sl4j.version>1.7.7</sl4j.version>
         <bc.version>1.60</bc.version>
@@ -34,9 +34,9 @@
         <developer>
             <id>lundberg</id>
             <name>Johan Lundberg</name>
-            <email>lundberg@nordu.net</email>
-            <organization>NORDUnet A/S</organization>
-            <organizationUrl>http://www.nordu.net/</organizationUrl>
+            <email>lundberg@sunet.se</email>
+            <organization>Sunet</organization>
+            <organizationUrl>http://www.sunet.se/</organizationUrl>
             <roles>
                 <role>developer</role>
                 <role>documentation</role>
