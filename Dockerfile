@@ -1,4 +1,7 @@
-FROM docker.sunet.se/eduid/python3env
+FROM openjdk:8-jre
+# Debian stable no longer has openjdk-8-jre available
+# As there is no packages anymore it is probably better
+# to use a Docker Hub image to get any security patches
 
 MAINTAINER eduid-dev <eduid-dev@SEGATE.SUNET.SE>
 

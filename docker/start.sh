@@ -75,4 +75,4 @@ chmod 640 "${navet_properties}" || true
 echo "$0: Starting JAR ${navet_jar_file} (properties file: ${navet_properties})"
 exec start-stop-daemon --start --quiet -c eduid:eduid \
      --pidfile "${state_dir}/${eduid_name}.pid" --make-pidfile \
-     --exec /usr/bin/java -- -jar ${navet_jar_file} -c ${navet_properties}
+     --exec /usr/local/openjdk-8/bin/java -- -jar ${navet_jar_file} -c ${navet_properties}
