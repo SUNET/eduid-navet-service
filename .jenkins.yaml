@@ -5,6 +5,7 @@ environment_variables:
   # Workaround for a bug with maven surefire and openjdk 8
   # https://stackoverflow.com/a/53085816
   _JAVA_OPTIONS: "-Djdk.net.URLClassPath.disableClassPathURLCheck=true"
+  LD_LIBRARY_PATH: "/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/external_libs/lib64:/external_libs/usr/lib64"
 script:
   - mvn package
 triggers:
