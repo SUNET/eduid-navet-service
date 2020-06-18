@@ -27,7 +27,6 @@
         <jetty.version>9.4.29.v20200521</jetty.version>
         <cxf.version>3.3.6</cxf.version>
         <sl4j.version>1.7.30</sl4j.version>
-        <bc.version>1.65</bc.version>
         <jersey.version>2.31</jersey.version>
     </properties>
 
@@ -77,12 +76,12 @@
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>${bc.version}</version>
+            <version>1.65.01</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk15on</artifactId>
-            <version>${bc.version}</version>
+            <version>1.65</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
