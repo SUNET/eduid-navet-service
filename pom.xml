@@ -24,10 +24,10 @@
     <properties>
         <project.builder.sourceEncoding>UTF-8</project.builder.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jetty.version>9.4.39.v20210325</jetty.version>
-        <cxf.version>3.4.1</cxf.version>
+        <jetty.version>9.4.39.v20210325</jetty.version>        
+        <cxf.version>3.4.2</cxf.version>
         <sl4j.version>1.7.30</sl4j.version>
-        <jersey.version>2.32</jersey.version>
+        <jersey.version>2.33</jersey.version>
     </properties>
 
     <developers>
@@ -71,17 +71,17 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>30.0-jre</version>
+            <version>30.1-jre</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.67</version>
+            <version>1.68</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk15on</artifactId>
-            <version>1.67</version>
+            <version>1.68</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
