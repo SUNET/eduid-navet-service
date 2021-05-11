@@ -79,7 +79,6 @@ public class NavetNotification {
                 personPost.getCivilstand();
                 personPost.getFodelse();
                 personPost.getFolkbokforing();
-                personPost.getHanvisningsPersonNr();
                 personPost.getInvandring();
                 personPost.getMedborgarskap();
                 */
@@ -112,13 +111,20 @@ public class NavetNotification {
 
             public static class PersonItem {
                 private PersonId PersonId = new PersonId();
+                private String ReferenceNationalIdentityNumber = "";
                 private Name Name = new Name();
                 private PostalAddresses PostalAddresses = new PostalAddresses();
                 List<Relation> Relations = new ArrayList<>();
 
                 public void setAll(PersonpostTYPE personPost) {
-                    // NationalIdentityNumber
+                    // NationalIdentityNumber (CoOrdinationNumber if it is received)
                     this.PersonId.setAll(personPost.getPersonId());
+
+                    // ReferenceNationalIdentityNumber
+                    JAXBElement<Long> refNin = personPost.getHanvisningsPersonNr();
+                    if (refNin != null) {
+                        this.setReferenceNationalIdentityNumber(refNin.getValue());
+                    }
 
                     // Name
                     NamnTYPE namn = personPost.getNamn();
@@ -438,8 +444,12 @@ public class NavetNotification {
                     return PersonId;
                 }
 
-                public void setPersonId(PopulationItem.PersonItem.PersonId personId) {
-                    PersonId = personId;
+                public void setPersonId(PopulationItem.PersonItem.PersonId personId) { PersonId = personId; }
+
+                public String getReferenceNationalIdentityNumber() { return ReferenceNationalIdentityNumber; }
+
+                public void setReferenceNationalIdentityNumber(Long refNin) {
+                    ReferenceNationalIdentityNumber = refNin.toString();
                 }
 
                 public PopulationItem.PersonItem.Name getName() {
