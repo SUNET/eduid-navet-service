@@ -13,6 +13,7 @@ public class SetupCommon {
     public String configFile = "./src/test/resources/navet-service.properties";
     public static final String TEST_PERSON_NIN = "196608253081";
     public static final String TEST_PERSON_FAILING_NIN = "197601020303";
+    public static final String TEST_PERSON_REF_NIN = "196709132887";
     public static final String TEST_PERSON_GIVEN_NAME = "Teofil";
     public static final String TEST_PERSON_FAILING_GIVEN_NAME = "Mupp";
 

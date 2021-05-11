@@ -9,6 +9,7 @@ public class SetupCommon  {
     private static final String TRUST_KEYSTORE_PASSWORD = "abc123";
     public static final String WS_BASE_ENDPOINT = "https://www2.test.skatteverket.se/na/na_epersondata";
     public static final String TEST_PERSON_NIN = "196608253081";
+    public static final String TEST_PERSON_REF_NIN = "196709132887";
     public static final String TEST_PERSON_GIVEN_NAME = "Teofil";
     public static final String ORG_NR = "162021004748";
     public static final String ORDER_ID = "00000079-FO01-0001";
