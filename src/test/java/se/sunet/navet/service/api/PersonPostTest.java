@@ -91,4 +91,26 @@ public class PersonPostTest extends SetupCommon {
 
         assertNull(jsonResponse.getPersonItem());
     }
+
+    @Test
+    public void testNINDeregistered() throws Exception {
+        Server server = embeddedServer.getServer();
+        String servletPath = "/personpost/person";
+
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(server.getURI()).path(servletPath);
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("identity_number", TEST_PERSON_DEREGISTERED_NIN);
+
+        Entity entity = Entity.entity(gson.toJson(data), MediaType.APPLICATION_JSON);
+        Response response = target.request(MediaType.APPLICATION_JSON).post(entity);
+
+        PersonPost.Response jsonResponse = gson.fromJson(response.readEntity(String.class), PersonPost.Response.class);
+
+        assertEquals(jsonResponse.getPersonItem().getPersonId().getNationalIdentityNumber(), TEST_PERSON_DEREGISTERED_NIN);
+        NavetNotification.Response.PopulationItem.PersonItem.DeregistrationInformation deregistrationInformation = jsonResponse.getPersonItem().getDeregistrationInformation();
+        assertEquals(deregistrationInformation.getCauseCode(), "UV");
+        assertEquals(deregistrationInformation.getDate(), "19980810");
+    }
 }

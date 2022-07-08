@@ -75,7 +75,6 @@ public class NavetNotification {
                 PopulationItem.PersonItem.setAll(personPost);
                 // Add more data?
                 /*
-                personPost.getAvregistrering();
                 personPost.getCivilstand();
                 personPost.getFodelse();
                 personPost.getFolkbokforing();
@@ -111,6 +110,7 @@ public class NavetNotification {
 
             public static class PersonItem {
                 private PersonId PersonId = new PersonId();
+                private DeregistrationInformation DeregistrationInformation = new DeregistrationInformation();
                 private String ReferenceNationalIdentityNumber = "";
                 private Name Name = new Name();
                 private PostalAddresses PostalAddresses = new PostalAddresses();
@@ -125,6 +125,9 @@ public class NavetNotification {
                     if (refNin != null) {
                         this.setReferenceNationalIdentityNumber(refNin.getValue());
                     }
+
+                    // Deregistration information
+                    this.DeregistrationInformation.setAll(personPost.getAvregistrering());
 
                     // Name
                     NamnTYPE namn = personPost.getNamn();
@@ -180,6 +183,29 @@ public class NavetNotification {
                     public void setNationalIdentityNumber(Long nationalIdentityNumber) {
                         NationalIdentityNumber = nationalIdentityNumber.toString();
                     }
+                }
+
+                public static class DeregistrationInformation {
+                    private String date;
+                    // AV = Avliden
+                    // UV = Utvandrad
+                    // GN = Gammalt personnummer
+                    // AN = Annan anledning
+                    // TA = Tekniskt avregistrerad
+                    // OB = Försvunnen
+                    // FI = Falsk identitet
+                    private String causeCode;
+
+                    public void setAll(AvregistreringTYPE deregistration) {
+                        if (deregistration != null) {
+                            date = deregistration.getAvregistreringsdatum().getValue().toString();
+                            causeCode = deregistration.getAvregistreringsorsakKod().getValue().toString();
+                        }
+                    }
+
+                    public String getDate() { return date; }
+
+                    public String getCauseCode() { return causeCode; }
                 }
 
                 public static class Name {
@@ -450,6 +476,10 @@ public class NavetNotification {
 
                 public void setReferenceNationalIdentityNumber(Long refNin) {
                     ReferenceNationalIdentityNumber = refNin.toString();
+                }
+
+                public PopulationItem.PersonItem.DeregistrationInformation getDeregistrationInformation() {
+                    return DeregistrationInformation;
                 }
 
                 public PopulationItem.PersonItem.Name getName() {
