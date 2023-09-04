@@ -63,15 +63,15 @@ public class EmbeddedServer {
         return context;
     }
 
-    private SslContextFactory getSslContextFactory(String keyStorePath, String keyStorePassword, String keyManagerPassword) {
-        SslContextFactory sslContextFactory = new SslContextFactory();
+    private SslContextFactory.Server getSslContextFactory(String keyStorePath, String keyStorePassword, String keyManagerPassword) {
+        SslContextFactory.Server sslContextFactory = new SslContextFactory.Server();
         sslContextFactory.setKeyStorePath(keyStorePath);
         sslContextFactory.setKeyStorePassword(keyStorePassword);
         sslContextFactory.setKeyManagerPassword(keyManagerPassword);
         return sslContextFactory;
     }
 
-    private void configureSslServer(String host, Integer port, SslContextFactory sslContextFactory) {
+    private void configureSslServer(String host, Integer port, SslContextFactory.Server sslContextFactory) {
         HttpConfiguration https_config = new HttpConfiguration();
         https_config.setSecureScheme("https");
         https_config.setSecurePort(port);
@@ -147,7 +147,7 @@ public class EmbeddedServer {
             String jettyKeyStorePath = prop.getProperty("jettyKeyStorePath");
             String jettyKeyStorePassword = prop.getProperty("jettyKeyStorePassword");
             String jettyKeyManagerPassword = prop.getProperty("jettyKeyManagerPassword");
-            SslContextFactory sslContextFactory = getSslContextFactory(jettyKeyStorePath, jettyKeyStorePassword, jettyKeyManagerPassword);
+            SslContextFactory.Server sslContextFactory = getSslContextFactory(jettyKeyStorePath, jettyKeyStorePassword, jettyKeyManagerPassword);
             configureSslServer(host, port, sslContextFactory);
         }
     }

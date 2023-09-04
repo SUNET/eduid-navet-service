@@ -5,9 +5,9 @@ import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.skatteverket.folkbokforing.na.personpostxml.v2.NaWebServiceException;
-import se.skatteverket.folkbokforing.na.personpostxml.v2.PersonpostXMLService;
-import se.skatteverket.folkbokforing.na.personpostxml.v2.PersonpostXMLInterface;
+import se.skatteverket.folkbokforing.na.personpostxml.v4.NaWebServiceException;
+import se.skatteverket.folkbokforing.na.personpostxml.v4.PersonpostXMLService;
+import se.skatteverket.folkbokforing.na.personpostxml.v4.PersonpostXMLInterface;
 import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.BestallningTYPE;
 import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.PersonpostRequestTYPE;
 import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.ResponseXMLTYPE;
@@ -35,7 +35,7 @@ public class PersonPostService  {
     private String organisationNumber;
     private String orderId;
     private String wsBaseEndpoint;
-    private static String serviceName = "V2/personpostXML";
+    private static String serviceName = "personpostXML";
 
     public PersonPostService(String wsBaseEndpoint, String orgNum, String orderId) throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, IOException {
         this.wsBaseEndpoint = wsBaseEndpoint;

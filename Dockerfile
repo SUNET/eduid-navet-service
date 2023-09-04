@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
+FROM openjdk:11-jre
 # Debian stable no longer has openjdk-8-jre available
 # As there is no packages anymore it is probably better
 # to use a Docker Hub image to get any security patches
