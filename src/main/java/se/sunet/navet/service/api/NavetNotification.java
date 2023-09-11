@@ -221,19 +221,19 @@ public class NavetNotification {
                             this.setGivenNameMarking(givenNameMarkingElement.getValue());
                         }
                         // GivenName
-                        JAXBElement<NamnTYPE.Fornamn> givenNameElement = name.getFornamn();
+                        JAXBElement<String> givenNameElement = name.getFornamn();
                         if (givenNameElement != null) {
-                            this.setGivenName(givenNameElement.getValue().getValue());
+                            this.setGivenName(givenNameElement.getValue());
                         }
                         // MiddleName
-                        JAXBElement<NamnTYPE.Mellannamn> middleNameElement = name.getMellannamn();
+                        JAXBElement<String> middleNameElement = name.getMellannamn();
                         if (middleNameElement != null) {
-                            this.setMiddleName(middleNameElement.getValue().getValue());
+                            this.setMiddleName(middleNameElement.getValue());
                         }
                         // Surname
-                        JAXBElement<NamnTYPE.Efternamn> surNameElement = name.getEfternamn();
+                        JAXBElement<String> surNameElement = name.getEfternamn();
                         if (surNameElement != null) {
-                            this.setSurname(surNameElement.getValue().getValue());
+                            this.setSurname(surNameElement.getValue());
                         }
 
                     }

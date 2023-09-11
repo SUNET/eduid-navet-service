@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2016 sp1 (http://www.altova.com) by ﻿Skatteverket (Skatteverket) -->
+<!-- version: na_webservices_xmls.7_2.28 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified">
 	<xs:element name="Navetavisering">
 		<xs:annotation>
@@ -253,6 +253,13 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:element name="SkyddadFolkbokforing" default="N" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="Arendeuppgift" minOccurs="0">
 				<xs:complexType>
 					<xs:complexContent>
@@ -266,7 +273,7 @@
 		</xs:sequence>
 	</xs:complexType>
 	<!-- ************************************ -->
-	<!--Beskrivning av Ärendeuppgift  -->
+	<!--Beskrivning av Ärendeuppgift          -->
 	<!--************************************* -->
 	<xs:complexType name="ArendeuppgiftTYPE">
 		<xs:sequence>
@@ -290,6 +297,7 @@
 		<xs:sequence>
 			<xs:element name="PersonId" type="PersonIdTYPE"/>
 			<xs:element name="HanvisningsPersonNr" type="PersonNrTYPE" nillable="true" minOccurs="0"/>
+            <xs:element name="Hanvisningar" type="HanvisningarTYPE" minOccurs="0"/>
 			<xs:element name="Avregistrering" type="AvregistreringTYPE" minOccurs="0"/>
 			<xs:element name="Fodelsedatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
 			<xs:element name="Namn" type="NamnTYPE" minOccurs="0"/>
@@ -300,8 +308,44 @@
 			<xs:element name="Invandring" type="InvandringTYPE" minOccurs="0"/>
 			<xs:element name="Relationer" type="RelationerTYPE" minOccurs="0"/>
 			<xs:element name="Medborgarskap" type="MedborgarskapTYPE" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="Samordningsnummeruppgifter" type="SamordningsnummeruppgifterTYPE" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+    <!-- ************************************ -->
+    <!--Beskrivning av Hanvisningar          -->
+    <!--************************************* -->
+    <xs:complexType name="HanvisningarTYPE">
+        <xs:sequence>
+            <xs:element name="Hanvisning" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="HanvisningsPersonNr" type="PersonNrTYPE"/>
+                    </xs:sequence>
+                    <xs:attribute name="status">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="NY"/>
+                                <xs:enumeration value="AS"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+
+        </xs:sequence>
+    </xs:complexType>
+    <!-- ************************************ -->
+    <!--Beskrivning av Samordningsnummeruppgifter          -->
+    <!--************************************* -->
+    <xs:complexType name="SamordningsnummeruppgifterTYPE">
+        <xs:sequence>
+            <xs:element name="Tilldelningsdatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
+            <xs:element name="PreliminartVilandeforklaringsdatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
+            <xs:element name="Fornyelsedatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
+            <xs:element name="DatumAvliden" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
 	<!-- ************************************ -->
 	<!--Beskrivning av Avregistrering   -->
 	<!--************************************* -->
@@ -309,6 +353,7 @@
 		<xs:sequence>
 			<xs:element name="AvregistreringsorsakKod" type="AvregistreringsorsakKodTYPE" nillable="true" minOccurs="0"/>
 			<xs:element name="Avregistreringsdatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="AntraffadDod" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- ************************************************* -->
@@ -324,6 +369,7 @@
 			<xs:enumeration value="GS"/>
 			<xs:enumeration value="OB"/>
 			<xs:enumeration value="TA"/>
+			<xs:enumeration value="FI"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<!-- ***************************************************** -->
@@ -355,54 +401,9 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="Fornamn" nillable="true" minOccurs="0">
-				<xs:complexType>
-					<xs:simpleContent>
-						<xs:extension base="Strang80TYPE">
-							<xs:attribute name="styrkt" use="optional">
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:enumeration value="J"/>
-										<xs:enumeration value="N"/>
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:attribute>
-						</xs:extension>
-					</xs:simpleContent>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="Mellannamn" nillable="true" minOccurs="0">
-				<xs:complexType>
-					<xs:simpleContent>
-						<xs:extension base="Strang40TYPE">
-							<xs:attribute name="styrkt" use="optional">
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:enumeration value="J"/>
-										<xs:enumeration value="N"/>
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:attribute>
-						</xs:extension>
-					</xs:simpleContent>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="Efternamn" nillable="true" minOccurs="0">
-				<xs:complexType>
-					<xs:simpleContent>
-						<xs:extension base="Strang60TYPE">
-							<xs:attribute name="styrkt" use="optional">
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:enumeration value="J"/>
-										<xs:enumeration value="N"/>
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:attribute>
-						</xs:extension>
-					</xs:simpleContent>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="Fornamn" type="Strang80TYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="Mellannamn" type="Strang40TYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="Efternamn" type="Strang60TYPE" nillable="true" minOccurs="0"/>
 			<xs:element name="Aviseringsnamn" nillable="true" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
@@ -455,6 +456,7 @@
 		<xs:sequence>
 			<xs:element name="Folkbokforingsadress" type="SvenskAdressTYPE" minOccurs="0"/>
 			<xs:element name="Riksnycklar" type="RiksnycklarTYPE" minOccurs="0"/>
+			<xs:element name="UUID" type="UUIDTYPE" minOccurs="0"/>
 			<xs:element name="Distrikt" type="DistriktTYPE" minOccurs="0"/>
 			<xs:element name="SarskildPostadress" type="SvenskAdressTYPE" minOccurs="0"/>
 			<xs:element name="Utlandsadress" type="UtlandsadressTYPE" minOccurs="0"/>
@@ -494,6 +496,16 @@
 			<xs:element name="FastighetsId" type="FastighetsIdTYPE" nillable="true" minOccurs="0"/>
 			<xs:element name="AdressplatsId" type="AdressplatsIdTYPE" nillable="true" minOccurs="0"/>
 			<xs:element name="LagenhetsId" type="LagenhetsIdTYPE" nillable="true" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ************************************ -->
+	<!--Beskrivning av UUID -->
+	<!--************************************* -->
+	<xs:complexType name="UUIDTYPE">
+		<xs:sequence>
+			<xs:element name="Fastighet" type="UUIDVardeTYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="Adress" type="UUIDVardeTYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="Lagenhet" type="UUIDVardeTYPE" nillable="true" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- ************************************ -->
@@ -570,22 +582,7 @@
 	<!--************************************* -->
 	<xs:complexType name="OrtUtlandetTYPE">
 		<xs:sequence>
-			<xs:element name="FodelseortUtland" nillable="true" minOccurs="0">
-				<xs:complexType>
-					<xs:simpleContent>
-						<xs:extension base="Strang80TYPE">
-							<xs:attribute name="styrkt" use="optional">
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:enumeration value="J"/>
-										<xs:enumeration value="N"/>
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:attribute>
-						</xs:extension>
-					</xs:simpleContent>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="FodelseortUtland" type="Strang80TYPE" nillable="true" minOccurs="0"/>
 			<xs:element name="Fodelseland" type="Strang40TYPE" nillable="true" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -664,22 +661,7 @@
 	<!--************************************* -->
 	<xs:complexType name="MedborgarskapTYPE">
 		<xs:sequence>
-			<xs:element name="MedborgarskapslandKod" nillable="true" minOccurs="0">
-				<xs:complexType>
-					<xs:simpleContent>
-						<xs:extension base="Strang2TYPE">
-							<xs:attribute name="styrkt" use="optional">
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:enumeration value="J"/>
-										<xs:enumeration value="N"/>
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:attribute>
-						</xs:extension>
-					</xs:simpleContent>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="MedborgarskapslandKod" type="Strang2TYPE" nillable="true" minOccurs="0"/>
 			<xs:element name="Medborgarskapsdatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="status" type="xs:string" use="optional"/>
@@ -805,24 +787,29 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PersonIdTYPE">
-		<xs:choice>
-			<xs:element name="PersonNr" nillable="true">
-				<xs:simpleType>
-					<xs:restriction base="xs:integer">
-						<xs:minInclusive value="100000000000"/>
-						<xs:maxInclusive value="999999999999"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="TilldelatPersonNrSamordningsNr" nillable="true">
-				<xs:simpleType>
-					<xs:restriction base="xs:integer">
-						<xs:minInclusive value="100000000000"/>
-						<xs:maxInclusive value="999999999999"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-		</xs:choice>
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="PersonNr" nillable="true">
+                    <xs:simpleType>
+                           <xs:restriction base="xs:integer">
+                                <xs:minInclusive value="100000000000"/>
+                                <xs:maxInclusive value="999999999999"/>
+                           </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="TilldelatPersonNrSamordningsNr" nillable="true">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:minInclusive value="100000000000"/>
+                                <xs:maxInclusive value="999999999999"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                </xs:element>
+            </xs:choice>
+            <xs:element name="Identitetsstatus" type="IdentitetsstatusTYPE" nillable="true" minOccurs="0"/>
+            <xs:element name="Identitetsniva" type="IdentitetsnivaTYPE" nillable="true" minOccurs="0"/>
+            <xs:element name="Identitetsnivadatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
+        </xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="PersonNrTYPE">
 		<xs:restriction base="xs:integer">
@@ -944,4 +931,58 @@
 			<xs:enumeration value="J"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="UUIDVardeTYPE">
+		<xs:restriction base="xs:string">
+			<xs:length value="36"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <!-- ************************************ -->
+    <!--Beskrivning av Identitetsstatus       -->
+    <!--************************************* -->
+    <xs:complexType name="IdentitetsstatusTYPE">
+        <xs:sequence>
+            <xs:element name="IdentitetsstatusVarde" type="IdentitetsstatusVardeTYPE"/>
+            <xs:element name="IdentitetsstatusDatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
+            <xs:element name="IdentitetsstatusOrsak" type="IdentitetsstatusOrsakTYPE" nillable="true" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ***************************************** -->
+    <!--Beskrivning av IdentitetsstatusVardeTYPE   -->
+    <!--****************************************** -->
+    <xs:simpleType name="IdentitetsstatusVardeTYPE">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AKTIVT"/>
+            <xs:enumeration value="VILANDEFORKLARAT"/>
+            <xs:enumeration value="VILANDEFORKLARAT_STANGT"/>
+            <xs:enumeration value="AVREGISTRERAT"/>
+            <xs:enumeration value="EJ_AKTUELLT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- ***************************************** -->
+    <!--Beskrivning av IdentitetsstatusOrsakTYPE   -->
+    <!--****************************************** -->
+    <xs:simpleType name="IdentitetsstatusOrsakTYPE">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TIDSFRIST"/>
+            <xs:enumeration value="ANNAN_ORSAK"/>
+            <xs:enumeration value="AVLIDEN"/>
+            <xs:enumeration value="ERSATT"/>
+            <xs:enumeration value="FELAKTIGT_REGISTRERAT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- ***************************************** -->
+    <!--Beskrivning av IdentitetsnivaTYPE   -->
+    <!--****************************************** -->
+    <xs:simpleType name="IdentitetsnivaTYPE">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="STYRKT"/>
+            <xs:enumeration value="SANNOLIK"/>
+            <xs:enumeration value="OSAKER"/>
+            <xs:enumeration value="INTE_TILLAMPLIG"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
