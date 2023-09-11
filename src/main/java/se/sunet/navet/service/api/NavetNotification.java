@@ -73,6 +73,15 @@ public class NavetNotification {
                 // PersonPost
                 PersonpostTYPE personPost = post.getPersonpost();
                 PopulationItem.PersonItem.setAll(personPost);
+                // Sekretessmarkering
+                if (post.getSekretessmarkering() != null) {
+                    PopulationItem.SecrecyMark = post.getSekretessmarkering().getValue().toString();
+                }
+                // SkyddadFolkbokforing
+                if (post.getSkyddadFolkbokforing() != null) {
+                    PopulationItem.ProtectedPopulationRegistration = post.getSkyddadFolkbokforing().getValue().toString();
+                }
+
                 // Add more data?
                 /*
                 personPost.getCivilstand();
@@ -88,6 +97,8 @@ public class NavetNotification {
         public static class PopulationItem {
 
             private CaseInformation CaseInformation = new CaseInformation();
+            private String SecrecyMark = "";
+            private String ProtectedPopulationRegistration = "";
             private PersonItem PersonItem = new PersonItem();
 
             public static class CaseInformation {
@@ -513,6 +524,13 @@ public class NavetNotification {
 
             public void setCaseInformation(PopulationItem.CaseInformation caseInformation) {
                 CaseInformation = caseInformation;
+            }
+            public String getSecrecyMark () {
+                return SecrecyMark;
+            }
+
+            public String ProtectedPopulationRegistration () {
+                return ProtectedPopulationRegistration;
             }
 
             public PopulationItem.PersonItem getPersonItem() {
