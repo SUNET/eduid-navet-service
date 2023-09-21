@@ -224,6 +224,7 @@ public class NavetNotification {
                     private String GivenName;
                     private String MiddleName;
                     private String Surname;
+                    private String NotificationName;
 
                     public void setAll(NamnTYPE name) {
                         // GivenNameMarking
@@ -246,7 +247,12 @@ public class NavetNotification {
                         if (surNameElement != null) {
                             this.setSurname(surNameElement.getValue());
                         }
-
+                        // NotificationName
+                        // created by SKV to be maximum 36 characters long
+                        JAXBElement<String> notificationNameElement = name.getAviseringsnamn();
+                        if (notificationNameElement != null) {
+                            this.setNotificationName(notificationNameElement.getValue());
+                        }
                     }
 
                     public String getGivenNameMarking() {
@@ -279,6 +285,14 @@ public class NavetNotification {
 
                     public void setSurname(String surname) {
                         Surname = surname;
+                    }
+
+                    public String getNotificationName() {
+                        return NotificationName;
+                    }
+
+                    public void setNotificationName(String notificationName) {
+                        NotificationName = notificationName;
                     }
                 }
 

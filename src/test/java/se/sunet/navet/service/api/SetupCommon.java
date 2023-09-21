@@ -17,6 +17,7 @@ public class SetupCommon {
     public static final String TEST_PERSON_GIVEN_NAME = "Teofil";
     public static final String TEST_PERSON_FAILING_GIVEN_NAME = "Mupp";
     public static final String TEST_PERSON_DEREGISTERED_NIN = "195003072260";
+    public static final String TEST_PERSON_NOTIFICATIONNAME_NIN = "194107086995";
 
     @BeforeClass
     public void setUp() throws Exception {
