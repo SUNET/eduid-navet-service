@@ -90,4 +90,53 @@ public class NavetNotificationTest extends SetupCommon {
         assertEquals(deregistrationInformation.getCauseCode(), "UV");
         assertEquals(deregistrationInformation.getDate(), "19980810");
     }
+
+    @Test
+    public void testNINSkyddMatch() throws Exception {
+        Server server = embeddedServer.getServer();
+        String servletPath = "/personpost/navetnotification";
+
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(server.getURI()).path(servletPath);
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("identity_number", "200704102391");
+
+        Entity entity = Entity.entity(gson.toJson(data), MediaType.APPLICATION_JSON);
+        Response response = target.request(MediaType.APPLICATION_JSON).post(entity);
+
+        NavetNotification.Response jsonResponse = gson.fromJson(response.readEntity(String.class), NavetNotification.Response.class);
+
+        assertNotNull(jsonResponse.getPopulationItems().get(0).getPersonItem());
+        assertEquals(jsonResponse.getPopulationItems().get(0).getPersonItem().getPersonId().getNationalIdentityNumber(), "200704102391");
+        assertNotNull(jsonResponse.getPopulationItems().get(0).getPersonItem().getPostalAddresses());
+        assertNotNull(jsonResponse.getPopulationItems().get(0).getPersonItem().getName());
+        assertNotNull(jsonResponse.getPopulationItems().get(0).getPersonItem().getRelations());
+        assertNotNull(jsonResponse.getPopulationItems().get(0).getCaseInformation());
+        assertNull(jsonResponse.getPopulationItems().get(0).getPersonItem().getDeregistrationInformation().getCauseCode());
+        assertNull(jsonResponse.getPopulationItems().get(0).getPersonItem().getDeregistrationInformation().getDate());
+        assertEquals(jsonResponse.getPopulationItems().get(0).getSecrecyMark(), "J");
+        assertEquals(jsonResponse.getPopulationItems().get(0).ProtectedPopulationRegistration(), "J");
+    }
+
+    @Test
+    public void testNINNotificationName() throws Exception {
+        Server server = embeddedServer.getServer();
+        String servletPath = "/personpost/navetnotification";
+
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(server.getURI()).path(servletPath);
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("identity_number", TEST_PERSON_NOTIFICATIONNAME_NIN);
+
+        Entity entity = Entity.entity(gson.toJson(data), MediaType.APPLICATION_JSON);
+        Response response = target.request(MediaType.APPLICATION_JSON).post(entity);
+
+        NavetNotification.Response jsonResponse = gson.fromJson(response.readEntity(String.class), NavetNotification.Response.class);
+
+        assertNotNull(jsonResponse.getPopulationItems().get(0).getPersonItem());
+        assertNotNull(jsonResponse.getPopulationItems().get(0).getPersonItem().getName());
+        assertNotNull(jsonResponse.getPopulationItems().get(0).getPersonItem().getName().getNotificationName());
+    }
 }

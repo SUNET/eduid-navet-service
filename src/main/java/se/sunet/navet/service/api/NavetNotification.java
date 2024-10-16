@@ -73,6 +73,15 @@ public class NavetNotification {
                 // PersonPost
                 PersonpostTYPE personPost = post.getPersonpost();
                 PopulationItem.PersonItem.setAll(personPost);
+                // Sekretessmarkering
+                if (post.getSekretessmarkering() != null) {
+                    PopulationItem.SecrecyMark = post.getSekretessmarkering().getValue().toString();
+                }
+                // SkyddadFolkbokforing
+                if (post.getSkyddadFolkbokforing() != null) {
+                    PopulationItem.ProtectedPopulationRegistration = post.getSkyddadFolkbokforing().getValue().toString();
+                }
+
                 // Add more data?
                 /*
                 personPost.getCivilstand();
@@ -88,6 +97,8 @@ public class NavetNotification {
         public static class PopulationItem {
 
             private CaseInformation CaseInformation = new CaseInformation();
+            private String SecrecyMark = "";
+            private String ProtectedPopulationRegistration = "";
             private PersonItem PersonItem = new PersonItem();
 
             public static class CaseInformation {
@@ -213,6 +224,7 @@ public class NavetNotification {
                     private String GivenName;
                     private String MiddleName;
                     private String Surname;
+                    private String NotificationName;
 
                     public void setAll(NamnTYPE name) {
                         // GivenNameMarking
@@ -221,21 +233,26 @@ public class NavetNotification {
                             this.setGivenNameMarking(givenNameMarkingElement.getValue());
                         }
                         // GivenName
-                        JAXBElement<NamnTYPE.Fornamn> givenNameElement = name.getFornamn();
+                        JAXBElement<String> givenNameElement = name.getFornamn();
                         if (givenNameElement != null) {
-                            this.setGivenName(givenNameElement.getValue().getValue());
+                            this.setGivenName(givenNameElement.getValue());
                         }
                         // MiddleName
-                        JAXBElement<NamnTYPE.Mellannamn> middleNameElement = name.getMellannamn();
+                        JAXBElement<String> middleNameElement = name.getMellannamn();
                         if (middleNameElement != null) {
-                            this.setMiddleName(middleNameElement.getValue().getValue());
+                            this.setMiddleName(middleNameElement.getValue());
                         }
                         // Surname
-                        JAXBElement<NamnTYPE.Efternamn> surNameElement = name.getEfternamn();
+                        JAXBElement<String> surNameElement = name.getEfternamn();
                         if (surNameElement != null) {
-                            this.setSurname(surNameElement.getValue().getValue());
+                            this.setSurname(surNameElement.getValue());
                         }
-
+                        // NotificationName
+                        // created by SKV to be maximum 36 characters long
+                        JAXBElement<String> notificationNameElement = name.getAviseringsnamn();
+                        if (notificationNameElement != null) {
+                            this.setNotificationName(notificationNameElement.getValue());
+                        }
                     }
 
                     public String getGivenNameMarking() {
@@ -268,6 +285,14 @@ public class NavetNotification {
 
                     public void setSurname(String surname) {
                         Surname = surname;
+                    }
+
+                    public String getNotificationName() {
+                        return NotificationName;
+                    }
+
+                    public void setNotificationName(String notificationName) {
+                        NotificationName = notificationName;
                     }
                 }
 
@@ -513,6 +538,13 @@ public class NavetNotification {
 
             public void setCaseInformation(PopulationItem.CaseInformation caseInformation) {
                 CaseInformation = caseInformation;
+            }
+            public String getSecrecyMark () {
+                return SecrecyMark;
+            }
+
+            public String ProtectedPopulationRegistration () {
+                return ProtectedPopulationRegistration;
             }
 
             public PopulationItem.PersonItem getPersonItem() {

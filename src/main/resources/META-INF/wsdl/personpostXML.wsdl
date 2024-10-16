@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:impl="http://www.skatteverket.se/folkbokforing/na/personpostXML/v2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:na="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1" targetNamespace="http://www.skatteverket.se/folkbokforing/na/personpostXML/v2">
-  <wsdl:documentation>Version 2.0</wsdl:documentation>
+<wsdl:definitions
+        targetNamespace="http://www.skatteverket.se/folkbokforing/na/personpostXML/v4"
+        xmlns:impl="http://www.skatteverket.se/folkbokforing/na/personpostXML/v4"
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:na="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1">
+  <wsdl:documentation>Version 4.0</wsdl:documentation>
   <wsdl:types>
-    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.skatteverket.se/folkbokforing/na/personpostXML/v2">
-      <xsd:import schemaLocation="schema/Epersondata.xsd" namespace="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1"/>
+    <xsd:schema targetNamespace="http://www.skatteverket.se/folkbokforing/na/personpostXML/v4" xmlns="http://www.w3.org/2001/XMLSchema">
+      <xsd:import
+              schemaLocation="schema/Epersondata.xsd" namespace="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1"/>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="getDataRequest">
@@ -19,7 +26,7 @@
     <wsdl:operation name="getData">
       <wsdl:input message="impl:getDataRequest" name="getDataRequest"/>
       <wsdl:output message="impl:getDataResponse" name="getDataResponse"/>
-      <wsdl:fault message="impl:NaWebServiceException" name="NaWebServiceException"/>
+      <wsdl:fault message="impl:NaWebServiceException" name="NaWebServiceException" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PersonpostXMLSoapBinding" type="impl:PersonpostXMLInterface">
@@ -27,7 +34,7 @@
     <wsdl:operation name="getData">
       <wsdlsoap:operation soapAction=""/>
       <wsdl:input name="getDataRequest">
-        <wsdlsoap:body use="literal" parts="parameters"/>
+        <wsdlsoap:body  use="literal" parts="parameters"/>
       </wsdl:input>
       <wsdl:output name="getDataResponse">
         <wsdlsoap:body use="literal" parts="parameters"/>
@@ -39,7 +46,7 @@
   </wsdl:binding>
   <wsdl:service name="PersonpostXMLService">
     <wsdl:port binding="impl:PersonpostXMLSoapBinding" name="personpostXML">
-      <wsdlsoap:address location="https://www2.skatteverket.se/na/na_epersondata/V2/personpostXML"/>
+      <wsdlsoap:address location="https://www2.skatteverket.se/na/na_epersondata/V4/personpostXML"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

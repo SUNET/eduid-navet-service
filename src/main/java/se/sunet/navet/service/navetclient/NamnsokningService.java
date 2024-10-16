@@ -5,9 +5,9 @@ import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.skatteverket.folkbokforing.na.namnsokningxml.v2.NamnsokningXMLInterface;
-import se.skatteverket.folkbokforing.na.namnsokningxml.v2.NamnsokningXMLService;
-import se.skatteverket.folkbokforing.na.namnsokningxml.v2.NaWebServiceException;
+import se.skatteverket.folkbokforing.na.namnsokningxml.v4.NamnsokningXMLInterface;
+import se.skatteverket.folkbokforing.na.namnsokningxml.v4.NamnsokningXMLService;
+import se.skatteverket.folkbokforing.na.namnsokningxml.v4.NaWebServiceException;
 import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.*;
 
 import javax.net.ssl.KeyManager;
@@ -32,7 +32,7 @@ public class NamnsokningService {
     private String organisationNumber;
     private String orderId;
     private String wsBaseEndpoint;
-    private static String serviceName = "V2/namnsokningXML";
+    private static String serviceName = "namnsokningXML";
 
     public NamnsokningService(String wsBaseEndpoint, String orgNum, String orderId) throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException, IOException {
         this.wsBaseEndpoint = wsBaseEndpoint;
