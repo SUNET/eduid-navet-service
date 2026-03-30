@@ -7,7 +7,7 @@ VOLUME ["/opt/eduid/eduid-navet-service/etc", "/opt/eduid/eduid-navet-service/ru
 ADD docker/setup.sh /opt/eduid/setup.sh
 RUN /opt/eduid/setup.sh
 
-ADD target/eduid-navet-service-0.1-SNAPSHOT-shaded.jar /opt/eduid/eduid-navet-service-0.1-SNAPSHOT.jar
+ADD target/eduid-navet-service-0.1-SNAPSHOT.jar /opt/eduid/eduid-navet-service-0.1-SNAPSHOT.jar
 
 ADD docker/start.sh /start.sh
 
