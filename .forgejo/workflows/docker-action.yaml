@@ -1,0 +1,36 @@
+name: build-docker
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+
+jobs:
+  build:
+    runs-on: docker
+    container: ghcr.io/catthehacker/ubuntu:act-22.04
+    steps:
+      - name: Checkout the repo
+        uses: https://platform.sunet.se/actions/checkout@v4
+      - name: Setup JDK 11
+        uses: https://platform.sunet.se/actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Build and test
+        run: mvn package
+      - name: Login to Container Registry
+        uses: https://platform.sunet.se/actions/login-action@v3
+        with:
+          registry: platform.sunet.se
+          username: ci-sunet-eduid
+          password: ${{ secrets.CI_SUNET_EDUID }}
+      - name: Build and Push
+        uses: https://platform.sunet.se/actions/build-push-action@v6
+        with:
+          push: true
+          file: Dockerfile
+          tags: platform.sunet.se/eduid/eduid-navet-service:latest
