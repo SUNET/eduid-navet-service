@@ -1,6 +1,6 @@
-FROM openjdk:11-jre
+FROM eclipse-temurin:11-jre
 
-MAINTAINER eduid-dev <eduid-dev@SEGATE.SUNET.SE>
+LABEL maintainer="eduid-dev <eduid-dev@SEGATE.SUNET.SE>"
 
 VOLUME ["/opt/eduid/eduid-navet-service/etc", "/opt/eduid/eduid-navet-service/run"]
 
