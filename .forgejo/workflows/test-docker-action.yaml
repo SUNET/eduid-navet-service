@@ -22,7 +22,7 @@ jobs:
           cache: 'maven'
       - name: Build and test
         run: |
-          apt install maven
+          apt update && apt install maven
           mvn package
       - name: Login to Container Registry
         uses: https://platform.sunet.se/actions/login-action@v3
