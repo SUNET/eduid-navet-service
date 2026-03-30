@@ -9,6 +9,8 @@ import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.Resp
 import se.sunet.navet.service.api.exceptions.RestException;
 import se.sunet.navet.service.navetclient.PersonPostService;
 
+import org.w3c.dom.Element;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
@@ -132,9 +134,21 @@ public class NavetNotification {
                     this.PersonId.setAll(personPost.getPersonId());
 
                     // ReferenceNationalIdentityNumber
+                    // Check HanvisningsPersonNr at PersonpostTYPE level first,
+                    // then fall back to Hanvisning element inside PersonId (newer responses)
                     JAXBElement<Long> refNin = personPost.getHanvisningsPersonNr();
                     if (refNin != null) {
                         this.setReferenceNationalIdentityNumber(refNin.getValue());
+                    } else {
+                        for (Object obj : personPost.getPersonId().getAny()) {
+                            if (obj instanceof Element) {
+                                Element el = (Element) obj;
+                                if ("Hanvisning".equals(el.getLocalName())) {
+                                    this.setReferenceNationalIdentityNumber(
+                                            Long.parseLong(el.getTextContent().trim()));
+                                }
+                            }
+                        }
                     }
 
                     // Deregistration information
@@ -233,19 +247,19 @@ public class NavetNotification {
                             this.setGivenNameMarking(givenNameMarkingElement.getValue());
                         }
                         // GivenName
-                        JAXBElement<String> givenNameElement = name.getFornamn();
+                        JAXBElement<NamnTYPE.Fornamn> givenNameElement = name.getFornamn();
                         if (givenNameElement != null) {
-                            this.setGivenName(givenNameElement.getValue());
+                            this.setGivenName(givenNameElement.getValue().getValue());
                         }
                         // MiddleName
-                        JAXBElement<String> middleNameElement = name.getMellannamn();
+                        JAXBElement<NamnTYPE.Mellannamn> middleNameElement = name.getMellannamn();
                         if (middleNameElement != null) {
-                            this.setMiddleName(middleNameElement.getValue());
+                            this.setMiddleName(middleNameElement.getValue().getValue());
                         }
                         // Surname
-                        JAXBElement<String> surNameElement = name.getEfternamn();
+                        JAXBElement<NamnTYPE.Efternamn> surNameElement = name.getEfternamn();
                         if (surNameElement != null) {
-                            this.setSurname(surNameElement.getValue());
+                            this.setSurname(surNameElement.getValue().getValue());
                         }
                         // NotificationName
                         // created by SKV to be maximum 36 characters long
