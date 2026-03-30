@@ -33,6 +33,7 @@ jobs:
       - name: Build and Push
         uses: https://platform.sunet.se/actions/build-push-action@v6
         with:
+          context: .
           push: true
           file: Dockerfile
           tags: platform.sunet.se/eduid/eduid-navet-service:latest
