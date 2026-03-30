@@ -21,7 +21,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - name: Build and test
-        run: mvn package
+        run: |
+          apt install maven
+          mvn package
       - name: Login to Container Registry
         uses: https://platform.sunet.se/actions/login-action@v3
         with:
