@@ -7,10 +7,12 @@ import org.w3c.dom.Element;
 import se.skatteverket.xmls.se.skatteverket.folkbokforing.na.epersondata.v1.ResponseXMLTYPE;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.ws.WebServiceException;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 /**
  * Created by lundberg on 2015-09-16.
@@ -20,7 +22,20 @@ public class PersonPostServiceTest extends SetupCommon {
     public void testSendSecureMessage() throws Exception {
         PersonPostService personPostService = new PersonPostService(WS_BASE_ENDPOINT, ORG_NR, ORDER_ID);
 
-        ResponseXMLTYPE result = personPostService.getData(TEST_PERSON_NIN);
+        ResponseXMLTYPE result;
+        try {
+            result = personPostService.getData(TEST_PERSON_NIN);
+        } catch (WebServiceException e) {
+            StringBuilder sb = new StringBuilder("WebServiceException while calling Navet:\n");
+            Throwable t = e;
+            while (t != null) {
+                sb.append(t.getClass().getName()).append(": ").append(t.getMessage()).append('\n');
+                t = t.getCause();
+            }
+            System.err.println(sb);
+            fail(sb.toString(), e);
+            return;
+        }
 
         assertNotNull(result.getFolkbokforingsposter());
         assertNotNull(result.getFolkbokforingsposter().getFolkbokforingspost().get(0).getPersonpost());

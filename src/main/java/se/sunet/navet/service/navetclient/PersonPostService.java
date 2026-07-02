@@ -2,6 +2,8 @@ package se.sunet.navet.service.navetclient;
 
 import org.apache.cxf.configuration.jsse.TLSClientParameters;
 import org.apache.cxf.frontend.ClientProxy;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,11 +55,24 @@ public class PersonPostService  {
         // This binding needs to be first or the conduit modifications are lost
         BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, serviceEndpoint);
+        // Don't let HTTPConduit throw HTTPException on 4xx before the response is read -
+        // let it flow through the in-interceptor chain so LoggingInInterceptor can log it
+        bp.getRequestContext().put(HTTPConduit.NO_IO_EXCEPTIONS, Boolean.TRUE);
         // Setup tls and keyStore stuff
         TLSClientParameters tlsClientParameters = new TLSClientParameters();
         tlsClientParameters.setKeyManagers(keyManagers);
-        HTTPConduit conduit = (HTTPConduit) ClientProxy.getClient(port).getConduit();
+        org.apache.cxf.endpoint.Client client = ClientProxy.getClient(port);
+        HTTPConduit conduit = (HTTPConduit) client.getConduit();
         conduit.setTlsClientParameters(tlsClientParameters);
+        // Log full request/response/fault XML (unbounded) for fault tracing
+        LoggingInInterceptor logIn = new LoggingInInterceptor();
+        logIn.setLimit(-1);
+        LoggingOutInterceptor logOut = new LoggingOutInterceptor();
+        logOut.setLimit(-1);
+        client.getInInterceptors().add(logIn);
+        client.getInFaultInterceptors().add(logIn);
+        client.getOutInterceptors().add(logOut);
+        client.getOutFaultInterceptors().add(logOut);
         return port;
     }
 
