@@ -17,6 +17,13 @@ public class Run extends EmbeddedServer {
         // Must run before any logging/date formatting is triggered, so log timestamps are UTC
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 
+        // Must run before org.apache.cxf.transport.http.HTTPTransportFactory class-loads -
+        // it latches this into a static field once. Reverts CXF to the older
+        // URLConnectionHTTPConduit instead of the 3.6+ default HttpClientHTTPConduit
+        // (java.net.http.HttpClient), which has known request-write/Expect:100-continue
+        // bugs that can stall sending the request body to Navet.
+        System.setProperty("org.apache.cxf.transport.http.forceURLConnection", "true");
+
         CommandLineParser parser = new PosixParser();
 
         Options options = new Options();
