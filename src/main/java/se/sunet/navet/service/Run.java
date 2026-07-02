@@ -4,6 +4,7 @@ import org.apache.commons.cli.*;
 import se.sunet.navet.service.server.EmbeddedServer;
 
 import java.io.*;
+import java.util.TimeZone;
 
 /**
  * Created by lundberg on 2015-09-01.
@@ -13,6 +14,9 @@ public class Run extends EmbeddedServer {
     private static String configFile = "/opt/eduid/etc/navet-service.properties";
 
     public static void main(String[] args) {
+        // Must run before any logging/date formatting is triggered, so log timestamps are UTC
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+
         CommandLineParser parser = new PosixParser();
 
         Options options = new Options();
